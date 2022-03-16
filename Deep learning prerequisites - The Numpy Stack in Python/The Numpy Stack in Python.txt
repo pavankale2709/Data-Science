@@ -1,0 +1,379 @@
+-Numpy Stack
+	-NumPy - The raw material
+	-matplotlib - Visualize
+	-Pandas - Reading, writing and manipulation
+	-SciPy - Statistics
+-https://lazyprogrammer.me/numpy/
+
+
+-NumPy
+
+-Numpy Introduction
+	-Library for Linear algebra and a bit of probability
+	-ndarrays
+	-Vectors and Matrices
+		-Dot product/Inner Product
+		-Matrix multiplication
+		-Element-wise product
+		-Inverse
+		-Determinant
+	-Application
+		-Linear regression
+		-Logistic regression
+		-Deep Neural Networks
+		-K-Means clustering
+		-Density estimation
+		-Principle components analysis
+		-Matrix factorization (Recommender systems)
+		-Support Vector Machines (SVM)
+		-Markov Models, HMM
+		-Control Systemss
+		-Game Theory
+		-Operations research
+		-Portfolio Optimization
+-Arrays vs List
+	-import numpy as np
+	-L = [1, 2, 3]
+	-A = np.array([1, 2, 3])
+	-for e in L:
+		print(e)
+	-for e in A:
+		print(e)
+	-L.append(4)
+	-L + [5]
+	-Could not append element to numpy array
+	-A + np.array([4])
+	-A + np.array([4, 5, 7])
+	-2 * A -> Multiply each element of A by 2
+	-2 * L -> repeat List twice
+	-L + L -> Append L with L
+	-L2 = []
+	 for e in L:
+		L2.append(e+3)
+	-L2 = [e+3 for e in L]
+	-A**2
+	-np.sqrt(A)
+	-np.log(A)
+	-np.exp(A)
+	-np.tanh(A)
+-Dot Product
+	-a = np.array([1, 2])
+	 b = np.array([3, 4])
+	-dot = 0
+	 for e, f in zip(a, b):
+		dot += e * f
+	-dot = 0
+	 for i in range(len(a)):
+		dot += a[i] * b[i]
+	-a * b
+	-np.sum(a * b)
+	-(a * b).sum()
+	-np.dot(a, b)
+	-np.dot(a, b)
+	-a @ b
+	-amag = np.sqrt((a * a).sum())
+	-np.linalg.norm(a) -> Magnitude of a
+	-cosangle = a.dot(b)/(np.linalg.norm(a) *np.linalg.norm(b))
+	-angle = np.arccos(cosangle)
+-Matrices
+	-L = [[1, 2], [3, 4]]
+	-L[0][1]
+	-A = np.array([[1, 2], [3, 4]])
+	-A[0][1]
+	-A[0,1]
+	-A[:,0] -> Select column
+	-A.T -> transpose
+	-np.exp(A)
+	-np.exp(L)
+	-B = np.array([[1,2,3],[4,5,6]])
+	-A.dot(B)
+	-np.linalg.det(A)
+	-np.linalg.inv(A)
+	-np.trace(A)
+	-np.diag(A)
+	-np.diag([1,4])
+	-np.linalg.eig(A)
+	-Lam, V = np.linalg.eig(A)
+	-V[:,0] * Lam[0] == A @ V[:,0]
+	-V[:,0] * Lam[0], A @ V[:,0]
+	-np.allclose(V[:,0] * Lam[0], A @ V[:,0])
+	-np.allclose(V @ np.diag(Lam), A @ V)
+-Solving linear systems
+	-x1 + x2 = 2200
+	 1.5*x1 + 4*x2 = 5050
+	-x=[x1, x2]
+	 A=[[1, 1],[1.5, 4]]
+	 b=[2200, 5050]
+	-A*x = b
+	 x = A^(-1) * b
+	-The inverse is slower and less accurate, there are better algorithms to solve linear problems
+	-A = np.array([[1, 1],[1.5, 4]])
+	 b = np.array([2200, 5050])
+	 np.linalg.solve(A, b)				-> Recommended
+	-np.linalg.inv(A).dot(b)			-> slower and less accurate
+-Generating data
+	-Comparison of clustering algorithm in scikit-learn: https://scikit-learn.org/stable/modules/clustering.html
+	-np.zeros((2, 3))
+	-np.ones((2, 3))
+	-10 * np.ones((2, 3))
+	-np.eye(3)    -> Identity metrix
+	-np.random.random()
+	-np.random.randn(2, 3)  -> draws numbers from Standard normal distribution, mean=0, variance=1
+	-R =  np.random.randn(10000)
+	 R.mean()	OR 	np.mean(R)
+	 R.var()	OR	np.var(R)
+	 R.std()	OR 	np.std(R)
+	-R = np.random.rand(10000, 3)
+	 R.mean(axis=0)
+	 R.mean(axis=1)
+	 R.mean(axis=1).shape
+	 np.cov(R)
+	 np.cov(R).shape
+	 np.cov(R.T)
+	 np.cov
+	 np.cov(R, rowvar=False)
+	-p.random.randint(1, 100, size=(2,3))	-> Generate random integer array
+	-np.random.choice(10, size=(3, 3))		-> Randomly select items from 1-D input array
+-Where to learn more Numpy
+	-Linear Regression
+		X = input data, y = targets and w = weights
+		w = (X^T * X)^(-1) * X^T * y
+	-Deep neural networks
+		z1 = tanh(W0^T * x + b0)
+		z2 = tanh(W1^T * x + b1)
+		z3 = tanh(W2^T * x + b2)
+		...
+
+
+
+-Matplotlib
+
+-Matplotlib introduction
+	-How to visualize data?
+	-Line Charts: Plot any type of one dimentional signal (stock price, sound wave etc)
+	-Scatter plot: Geometric picture (classification problem)
+	-Histogram: To see probability distribution of data
+	-Plotting images
+-Line Chart
+	import numpy as np
+	import matplotlib.pyplot as plt
+	x = np.linspace(0, 20, num=1000)    # Return evenly spaced numbers over a specified interval
+	y = np.sin(x) + 0.2 * x
+	plt.plot(x, y)
+	plt.xlabel('input')
+	plt.ylabel('output')
+	plt.title('My plot')
+	plt.show()   # Not needed in Jupyter
+-Scatterplot
+	-X = np.random.randn(100, 2)
+	 plt.scatter(X[:,0], X[:,1])
+	-X = np.random.randn(200, 2)
+	 X[:50] += 3
+	 Y = np.zeros(200)
+	 Y[:50] = 1
+	 plt.scatter(X[:,0], X[:,1], c = Y)
+-Histogram
+	-X = np.random.randn(10000)
+	 plt.hist(X)
+	-plt.hist(X, bins=50);
+	-X = np.random.random(10000)
+	 plt.hist(X, bins=50);
+-Plotting images
+	from PIL import Image
+ 	im = Image.open('C:\\Users\\pakale\\Downloads\\IMG-20210711-WA0027.jpg')
+	type(im)
+	arr = np.array(im)
+	arr
+	arr.shape
+	plt.imshow(arr) # Show image array
+	plt.imshow(im)  # Show original image
+	#Convert color image to gray-scale image by taking mean against the color channel
+	gray = arr.mean(axis=2)		# also called Heat Map
+	gray.shape
+	plt.imshow(gray)
+	plt.imshow(gray, cmap='gray')  # Actual gray scale image
+-Where to learn more matplotlib
+	-Linear regression is nothing but a line of best fit
+	-Classification
+	-Objective functions (Objective is a number that we want to minimize or maximize)
+	-Classification objective
+	-Plotting the objective per iteration
+		-Examples of iteration algorithm: Gradient descent, Backpropagation, Expectation-maximization, Coordinate descent
+		-Examples of models: Logistic regression, Deep neural networks, Hidden markov models, Matrix factorization
+	-Reinforcement learning
+	-Finance
+	-Distribution of the stock return
+	-Scatter matrix of stock returns
+	-Plotting images - Computer vision, Object Detection, GANs (Generative Adversarial Network)
+	
+	
+	
+	
+-Pandas
+
+-Pandas Introduction
+	-Read, write and manipulation data
+-Loading in Data
+	import pandas as pd
+	import wget
+	url = 'https://raw.githubusercontent.com/lazyprogrammer/machine_learning_examples/master/tf2.0/sbux.csv'
+	filename = wget.download(url)
+	#df = pd.read_csv('https://raw.githubusercontent.com/lazyprogrammer/machine_learning_examples/master/tf2.0/sbux.csv')
+	df = pd.read_csv('sbux.csv')
+	type(df)
+	df.head()
+	df.tail()
+	df.info()
+-Selecting rows and columns
+	df.columns
+	df.columns = ['date', 'open', 'high', 'low', 'close', 'volume', 'name']
+	df['open']
+	type(df['open'])
+	df[['open', 'name']]
+	type(df[['open', 'name']])
+	df.iloc[0]  # Select row by integer indices
+	df.loc[0]   # Select row by row label
+	#Load csv file with specific column as column index
+	df2 = pd.read_csv('sbux.csv', index_col = 'date')
+	df2.head()
+	df2.loc['2013-02-08']
+	type(df2.loc['2013-02-08'])
+	#Query and get data from DataFrame
+	df[df['open'] > 64]
+	df[df['name'] != 'SBUX']
+	#Similar thing can be achieved with numpy
+	import numpy as np
+	A = np.arange(10)
+	A[A % 2 == 0]
+	#Convert DataFrame to numpy array
+	df.values
+	A = df[['open', 'close']].values
+	type(A)
+	#Writing DataFrame to file
+	smalldf = df[['open', 'close']]
+	smalldf.to_csv('output.csv') # Add index in file
+	smalldf.to_csv('output.csv', index=False) # Do not add index in file
+-The apply() function
+	-Used to do same operation of each row or column of the dataframe
+	def date_to_year(row):
+    return int(row['date'].split('-')[0])
+	#df.apply(date_to_year, axis=1)
+	df['year'] = df.apply(date_to_year, axis=1)
+-Plotting with Pandas
+	df['open'].hist() #Histogram
+	df['open'].plot() #Line plot
+	df[['open', 'high', 'low', 'close']].plot.box() #Box plot
+	from pandas.plotting import scatter_matrix
+	scatter_matrix(df[['open', 'high', 'low', 'close']], alpha=0.2, figsize=(6, 6)); #Scatter plot
+-Where to learn more Pandas
+	-Dataframe: 2-D data
+	-Series: 1-D data
+	-Loading data is very easy
+	-Preprocessing with apply() function
+	-Used in:
+		-Finance
+			-Shift prices back by one day, calculating stock returns from stock prices, indexing by date, selecting dates excluding holidays/weekends (business days)
+		-Machine learning
+			-Loading data, saving data, basic transformations
+			-Prepare data -> Train model -> Package model -> Validate Model -> Deploy model -> Monitor model
+	
+	
+
+-Scipy
+
+-Scipy introduction 
+	-Scipy is superpowered version of numpy. It takes numpy and then adds a lot of functionality from different fields of study, such as statistics, signal processing and computer vision.
+-PDF and CDF
+	import numpy as np
+	import matplotlib.pyplot as plt
+	from scipy.stats import norm
+	x = np.linspace(-6, 6, 1000)
+	#Plot PDF
+	fx = norm.pdf(x, loc=0, scale=1)
+	plt.plot(x, fx)
+	#Plot CDF
+	Fx = norm.cdf(x, loc=0, scale=1)
+	plt.plot(x, Fx)
+	#logpdf
+	logfx = norm.logpdf(x, loc=0, scale=1)
+	plt.plot(x, logfx)
+-Convolution
+	-Use convolution to achieve a blurring effect using a Gaussian filter
+	from PIL import Image
+	im = Image.open('C:/Users/pakale/Desktop/other/Pavan_Kale_Photo.jpg')
+	gray = np.mean(im, axis=2)
+	#Create gaussian filter
+	x = np.linspace(-6, 6, 50)
+	fx = norm.pdf(x, loc=0, scale=1)
+	filt = np.outer(fx, fx)
+	plt.imshow(filt, cmap='gray')  # plt.imshow(filt)
+	#Apply filter to our image
+	from scipy.signal import convolve2d
+	out = convolve2d(gray, filt)
+	plt.subplot(1, 2, 1)
+	plt.imshow(gray, cmap='gray')
+	plt.subplot(1, 2, 2)
+	plt.imshow(out, cmap='gray')
+	#Edge detection
+	# Sobel operator - approximate gradient in X dir
+	Hx = np.array([[1, 0, -1],[2, 0, -2],[1, 0, -1]])
+	# Sobel operator - approximate gradient in Y dir
+	Hy = np.array([[1, 2, 1],[0, 0, 0],[-1, -2, -1]])
+	Gx = convolve2d(gray, Hx)
+	plt.imshow(Gx, cmap='gray')
+	plt.show()
+	Gy = convolve2d(gray, Hy)
+	plt.imshow(Gy, cmap='gray')
+	plt.show()
+	# Gradient magnitude
+	G = np.sqrt(Gx*Gx + Gy*Gy)
+	plt.imshow(G, cmap='gray')
+	plt.show()
+	# The gradient's direction
+	theta = np.arctan2(Gy, Gx)
+	plt.imshow(theta, cmap='gray')
+	plt.show()
+-Where to learn more Scipy
+	-Probability and statistics
+		-A/B testing or hypothesis testing
+		-Simulations ()
+	-Signal processing
+		-Timeseries analysis
+		-Working with images - Computer vision
+		-Convolution
+	-Optimization
+		-To optimize the objective function
+		-Portfolio optimization
+-The central limit theorem is that if we say a random variable to be the sum of some other random variables from any distribution, then as the number of random variables in the sum approaches infinity, the distribution of the sum approaches the normal distribution.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

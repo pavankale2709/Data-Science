@@ -1,0 +1,97 @@
+When we call com.bmc.arsys.rx.services.email.EmailService.sendEmail(email) method, following were the content of the "email" object.
+ 
+messageBodyRTF: true
+messageTo: elizabeth@bwflabs.localdomain
+messageSubject: CASE-0000000002 has been assigned to you.
+messageBody:
+<table style="border-collapse: collapse; width: 100%; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #333333;" width="100%">
+ <tbody>
+  <tr>
+   <td colspan="3" class="top-spacing" style="height: 50px;"></td>
+  </tr>
+  <tr>
+   <td class="left-spacing" style="width: 50%;"></td>
+   <td class="content-cell" style="min-width: 600px; width: 600px;">
+    <table class="content-table" style="border-collapse: collapse; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #333333; width: 600px;" width="600">
+     <tbody>
+      <tr>
+       <td class="header" style="background-color: #4e5154; color: #ffffff; padding: 20px;"><img alt="Logo" src="data:image/png;base64,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<br />"></td>
+       <td class="header align-right" style="background-color: #4e5154; color: #ffffff; padding: 20px; text-align: right;">Line of Business: Human Resource</td>
+      </tr>
+      <tr>
+       <td colspan="2" class="content-wrapper" style="background-color: #f0f0f1; padding: 20px;">
+        <table class="main" style="border-collapse: collapse; width: 100%; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #333333;" width="100%">
+         <tbody>
+          <tr>
+           <td class="main-cell" style="background-color: #ffffff; border: 1px solid #d6d7d8; padding: 20px;">
+            <div style="font-size: 18px">
+             <a target="_blank" href="https://platform-admin-0.platform-admin/helix/index.html#/com.bmc.dsm.bwfa/view/com.bmc.dsm.case-lib%3ACase%20Edit?Case%20ID=AGGADGJ2E5DTIARDO31TRDO31TKUIA&amp;Requester%20View=">CASE-0000000002</a> has been assigned to you.
+            </div><br><span style="font-weight: bold">Case Details:</span><br><span>————————————————————————————————————</span><br><span><span style="font-weight: bold">Case ID:</span> </span> CASE-0000000002<br><span><span style="font-weight: bold">Priority:</span> </span> Medium<br><span><span style="font-weight: bold">Status:</span> </span> Assigned<br><span><span style="font-weight: bold">Summary:</span> Case 2 </span><br><span><span style="font-weight: bold">Description:</span> Allen Allbrook Case 2 </span><br><span>————————————————————————————————————</span></td>
+          </tr>
+         </tbody>
+        </table></td>
+      </tr>
+     </tbody>
+    </table></td>
+   <td class="right-spacing" style="width: 50%;"></td>
+  </tr>
+ </tbody>
+</table>
+
+
+-------------------------------------------------------------------------------------
+But when actual email got send, there are some additional <br> element before each <table> html element.
+ 
+Following is one of the entry in "AR System Email Messages": 000000000000009
+http://clm-pun-uvc3no.bmc.com:8008/helix/index.html#/com.bmc.arsys.rx.innovationstudio/record/edit-data/AR%20System%20Email%20Messages
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<table style="border-collapse: collapse; width: 100%; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #333333;" width="100%"> 
+<tbody> 
+<tr> 
+<td colspan="3" style="height: 50px;"></td> 
+</tr> 
+<tr> 
+<td style="width: 50%;"></td> 
+<td style="min-width: 600px; width: 600px;"><br> <br><br><br><br><br><br><br><br><br><br>
+<table style="border-collapse: collapse; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #333333; width: 600px;" width="600"> 
+<tbody> 
+<tr> 
+<td style="background-color: #4e5154; color: #ffffff; padding: 20px;"><img alt="Logo"
+src="data:image/png;base64,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<br />"></td> 
+<td style="background-color: #4e5154; color: #ffffff; padding: 20px; text-align: right;">Line of Business: Human Resource</td> 
+</tr> 
+<tr> 
+<td colspan="2" style="background-color: #f0f0f1; padding: 20px;"><br> <br><br><br><br><br><br>
+<table style="border-collapse: collapse; width: 100%; font-family: Helvetica, Arial, sans-serif; font-size: 13px; line-height: 20px; color: #333333;" width="100%"> 
+<tbody> 
+<tr> 
+<td style="background-color: #ffffff; border: 1px solid #d6d7d8; padding: 20px;"><br> 
+<div style="font-size: 18px">
+<br> <a target="_blank">CASE-0000000002</a> has been assigned to you.
+<br> 
+</div><br><span style="font-weight: bold">Case Details:</span><br><span>————————————————————————————————————</span><br><span><span style="font-weight: bold">Case ID:</span> </span> CASE-0000000002<br><span><span style="font-weight: bold">Priority:</span> </span> Medium<br><span><span style="font-weight: bold">Status:</span> </span> Assigned<br><span><span style="font-weight: bold">Summary:</span> Case 2 </span><br><span><span style="font-weight: bold">Description:</span> Allen Allbrook Case 2 </span><br><span>————————————————————————————————————</span></td> 
+</tr> 
+</tbody> 
+</table></td> 
+</tr> 
+</tbody> 
+</table></td> 
+<td style="width: 50%;"></td> 
+</tr> 
+</tbody>
+</table>

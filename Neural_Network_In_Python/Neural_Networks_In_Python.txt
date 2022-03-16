@@ -1,0 +1,1097 @@
+-Work on neural networks began with the motivation that human brain computes in a very different way than a conventional computer and human brain is able to perform certain types of computations such as image recognition and pattern recognition much better than a conventional computer. On the other hand computers are very good at complex arithmetic calculations which human brain is not very good at.
+-Neural networks do not have the inbuilt rules.
+-Basically we will take a large set of data, feed it into the neural network. Neural network will make some rules and we will use this train neural network to predict for the other cases. This ability to create own rules makes neural network versatile powerful and scalable.
+-Fashion MNIST - A dataset in which we classify grayscale images into 10 different fashion items
+
+
+-NumPy
+	-NumPy is the code numerical computing package in Python and its core type is ndarray also known as NumPy array.
+	-NumPy packages are used in all numerical computation using Python and it provides high performance, vector. metrics and higher dimensional data structure for Python. It is implemented in C and Fortran and that's why it is much faster than Python i-build functions.
+	-import numpy as np
+	-np1 = np.array([1, 2, 3, 4, 5])
+	-type(np1)
+	-mat1 = np.array([[1, 2], [3, 4]])
+	-mat1.shape
+	-mat1.dtype
+	-mat1[0,0]=5
+	-All the elements of numpy array should be of same type.
+	-mat2 = np.arange(0,10,1)
+	-mat3 = np.linspace(0,10,20) -> array of 20 elements between 0 and 10
+	-mat4 = np.random.rand(3,5)
+	-mat5 = np.random.randn(3,5)
+	-np.diag(mat1) -> return diagonal elements of metrix
+	-np.ones([2,2], dtype=int)
+	-np.zeros([2,2], dtype=int)
+	-mat5[0,0]
+-Pandas
+	-Pandas is a software library written for the Python programming language for data manipulation and analysis.
+	-import pandas as pd
+	-data1 = pd.read_csv('C:/Users/pakale/Desktop/Data Science/Neural_Network_In_Python/Data Files/Customer.csv', header = 0) # Specify header row
+	-data1.head()
+	-data1.head(10)
+	-data2 = pd.read_csv('C:/Users/pakale/Desktop/Data Science/Neural_Network_In_Python/Data Files/Customer.csv', header = 0, index_col = 0) # specify index column
+	-data1.describe()
+	-data1.iloc[0]
+	-data2.loc['CG-12520']
+	-data2.iloc[0]
+	-If you know the position, you can use a iloc() and if you know the value (index), you can use the loc().
+	-data2.iloc[0:5]
+	-data2.iloc[0:5:2]
+	-data2.iloc[0:5, 0:4]
+-Seaborn
+	-Seaborn is a library for the data visualization, most commonly used library is matplotlib.
+	-import seaborn as sns
+	-sns.distplot(data2.Age)  #Plot distribution of age variable
+	-In statistics, kernel density estimation (KDE) is a non-parametric way to estimate the probability density function (PDF) of a random variable.
+	-sns.distplot(data2.Age, kde = False)
+	-help(sns.distplot)
+	-sns.distplot(data2.Age, kde = False, color = "red")
+	-iris = sns.load_dataset("iris")
+	-iris.head()
+	-iris.shape
+	-iris.describe()
+	-sns.jointplot(x="sepal_length", y="sepal_width", data=iris)  # Scatter plot
+	-sns.pairplot(iris)  # Create scatter plot for all the variables
+
+
+
+-Single Cells - Perceptron and Sigmoid Neuron
+
+-Perceptron
+	-A single cell of our nervous system is called a neuron. 
+	-In artificial neural networks, one of the earliest such artificial neuron was a "Perceptron".
+	-Perceptron is a black box which takes in several binary inputs x1, x2, ..., xm and produces a single binary output, represented by y. By binary input and binary output, these variables can take only 2 values, like 0 and 1, true or false etc.
+	-There are several ways in which these x1, x2, ..., xm can give us the desired output y. One of the rule is that we will multiply each of these input values with weight w1, w2, ..., wm and then compare if the final value of the sum of these products is greater than a threshold value or not.
+		output = 0, if Summation(j) w(j)*x(j) < threshold
+			   = 1, if Summation(j) w(j)*x(j) > threshold
+	-That is, Perceptron multiply the values of the feature with corresponding weight and check sum against the threshold value. If the sum is larger than the threshold, it gives one output, if it is smaller then it gives other output.
+	-So perceptron requires weights and threshold value to give out an output. But how will perceptron get the values of these parameters? 
+		-One way is, we give the values, in which case it is not learning. It is simple programming.
+		-The other ways learning, where we provide the perceptron with historical data of which shirts were selected and which shirts were rejected and the perception decides the weights and threshold value according to that previous data. You can get different models by changing weights and threshold.
+-Activation functions
+	-Step Activation functions
+		-Perceptron can be extended to any general input instead of restricting them to binary.
+		-output = 0, if Summation(j) w(j)*x(j) + b < 0
+				= 1, if Summation(j) w(j)*x(j) + b >= 0
+				b is called Bias (Bias = -threshold)
+		-Graphical representation of Perceptron = Simple Step function = This is one type of Activation Function = Step Activation Function
+		-Activation functions are basically those functions which take into account some threshold value.
+	-Sigmoid activation function
+		-There are many other types of activation functions. Most popular one is the "Sigmoid function". It is a smooth S-shape curve. It also has a minimum of zero at minus infinity and maximum of one at plus infinity. But instead of having a step and raising suddenly this function arises gradually and continuously. This function is also called "Logistic function" and is also used in "Logistic regression" which is a very basic classification algorithm.
+		-The sigmoid function solves a major problem that we have with this step function. When we are training our perceptron using historical data to find the value of weights and threshold, this step function is very sensitive to individual observations. Small change in the weight and biased values will completely flip the output for a lot of the other observations. This makes the step function very hard to control.
+		-With sigmoid function, the change is gradual so it is easier to control the behavior.
+		-Artificial neuron with sigmoid activation is called "Sigmoid or logistic neuron".
+		-Sigmoid function formula,  σ(z) = 1 / (1 + e^(-z))
+		-Output = 1 / (1 + exp(- (Summation(j) w(j)*x(j)) - b ))
+		-With this our artificial neural cell is ready which takes in any number of real value inputs and gives an output between 0 and 1.
+		-In generalized form, we taken any input which have any real value and we get one output with lies between 0 and 1.
+-Python - Creating Perceptron model
+	-Create a very simple "Single Perseptron model" to classify flower species depending on their pattel length and pattel width.
+	-"Sklearn" is very popular machine learning library for Python. It is the go to library to create regression, classification, decision tree or SVM model.
+	
+	import numpy as np
+	import pandas as pd
+	
+	rom sklearn.datasets import load_iris # pip install -U scikit-learn or conda install scikit-learn
+	iris = load_iris()
+	iris
+	
+	X = iris.data[:, (2,3)]
+	iris.target
+	iris.target_names
+	
+	y = (iris.target == 0)
+	y = (iris.target == 0).astype(np.int)
+	
+	#Build the regresion model
+	from sklearn.linear_model import Perceptron
+	
+	per_clf = Perceptron(random_state=42)
+	per_clf.fit(X,y)
+	
+	y_pred = per_clf.predict(X)
+	
+	from sklearn.metrics import accuracy_score
+	accuracy_score(y, y_pred)
+	
+	per_clf.intercept_
+	per_clf.coef_
+	
+	
+	
+-Neural networks - Stacking cells to create network
+
+-Basic Terminology
+	-Perceptron = Artificial neuron
+	-There are 2 ways to stack cells (perceptron), parallelly or sequentially.
+		-With parallel stacking, we can get multiple outputs with same inputs. 
+		-In sequential stacking, the output of one set of parallelly stacked neurons is sequentially given as input to the next set of parallelly stacked neurons.
+	-Why do we need sequential stacking?
+		-A single perceptual can find out the best straight line to classify the given data.
+		-But complex classification can not be done by single perceptron or single layer, we need to add hidden layers.
+		-In neural network, each neuron can focus on a particular feature of the object and not on the final output. The final output will be predicted based is the result of these features.
+	-Each set of parallel neurons is called as Layer
+		-Input layer
+		-Output layer
+		-Hidden layers
+	-Feed forward network
+		-The network in which process information flows in only the forward derection.
+	-Cyclic network
+		-The network in which the output of one of these cells of that layer goes back as input to another cell of that layer only. 
+		-Example: RNN
+		-RNNs are used in natural language processing and language modeling.
+	-Fully connected network
+		-Output from a neuron goes to all the neurons of the next layer
+	-Deep learning/Deep network
+		-More number of hidden layers -> deeper network -> more complex relationships
+		-Think of this like a system which learns the relationship between input and output. The more layers we have in the system, the more deep our system is  and more it is capable of establishing a complex relationship between input and output.
+-Gradient Descent
+	-Problem statement
+		-How neural networks actually learn/work?
+		-Establish the values of weights and biases so that predicted output is as close to actual output as possible.
+	-Gradient Descent (GD) method is used to find values of weights and biases.
+	-Gradient descent is an optimization technique to find minimum of a function.
+	-There are other optimization techniques also such Ordinary-Least-Square which is used in linear regression. But for a large number of features and complex relationships GD shows much better computational performance than any other technique.
+	-GD process
+		-Initialization
+			-Step 1: Assign random weight and bias values to all the cells in network
+		-Forward Propagation
+			-Step 2: Input one training example and calculate final output of network using these weight and bias values
+		-Backward propagation
+			-Step 3: Compare predicted and actual values and note (estimate) error using error function
+			-Step 4: Find those weights and biases which can reduce this error
+		-Implementation of GD
+			-Step 5 : Update weights and biases and repeat from step 2 till no further reduction in error function can be achieved
+	-Concept behind GD
+		-GD is a mathematical technique which is used to find out the minimum of a function.
+		-If you want to find out the value of 'x' at which the function has minimum value, there are two ways to it.
+			-1. If you know the exact relationship between X and the function you can use calculus to find the minimum of this function.
+			-2. Iterative technique
+				-We start at a random point on the graph. Lets say, we have x and corresponding f(x).
+				-Now instead of focusing on the whole graph we focus only on this small part of the graph and try to find out what happens if we slightly increase the value of x or decrease the value of x. In other words we are trying to find out which way is this slope.
+				-If this slope is negative, we increase the value of 'x' a little bit and then we will see that f(x) will also decrease. Similarly if the slope is positive, we decrease the value of 'x' which will slightly decrease the value of f(x).
+				-We continue taking these small small steps till we reach the final minimum point. When we are at this point moving either side only increases the value of the function, so we stop our process there.
+				-This iterative technique of finding instantaneous slope also known as gradient and slightly moving down that slope that is descent is called gradient descent.
+-Back Propagation
+	-Error functions
+		-Modulus function
+			-|-0.3| = 0.3
+		-Square function
+			-(0.3)^2 = 0.09
+			-Square function works well with regression but not with classification.
+		-Cross entropy loss error function
+			-E = -y * log(y') - (1 - y) * log(1 - y')
+				y = actual value
+				y' = predicted output value
+			-The reason for using this function is that this function does not have local minimums. If a function has local minimums, GD won't work properly and it might stop at local minimum instead of finding the global minimum.
+			-So for classification problems, 'Cross entropy loss error function' is used
+			-As for classification problem output is either 0 or 1.
+			-If actual output, y = 1, E = -log(y'), to minimize error, we have to minimize -log(y'), that is maximize log(y'), that is maximize y' -> Since y lies between 0 and 1, y' should be as close to 1 as possible. 
+			-If actual output, y = 0, E = -log(1 - y'), to minimize error, we have to minimize -log(1 - y'), that is  maximize log(1 - y'), that is maximize (1 - y') -> Since y lies between 0 and 1, y' should be as close to 0 as possible.
+			-w = w - α * Δw
+			 b = b - α * Δb
+				α = learning rate = determines the number of steps we take in downward direction 
+				Δw, Δb = unit steps
+				z=w1*x1 + w2*x2 + b
+				y'=1/(1+e^(-z))
+			-If α is large we are taking multiple steps in the direction of GD. This means that we can reach the bottom faster but problem with large α is that we can overshoot from the minimum.
+			-How to find Δw, Δb? These values are found by doing backward propagation, which means we will look back in the network to find out the instantaneous slope with respect to each w and b. We find Δw, Δb by finding slope/derivative of E with respect to weights and bias. 
+	-Back propagation process
+		-Lets say, x1 and x2 are inputs, y is actual output, y' is predicted output
+			-w1 and w2 are weights for 2 inputs and b is bias
+			-z=w1*x1+w2*x2+b
+			-σ(z)=y'=1/(1+e^(-z))
+		-Step 1: Initialization
+			-Initialize w1, w2 and b
+		-Step 2: Forward propagation
+			-Find z and y' (or σ(z)) using weights and bias
+				z=w1*x1 + w2*x2 + b
+				y'=1/(1+e^(-z))
+		-Step 3: Error calculation
+			-Find error using above error function
+				E = -y * log(y') - (1 - y) * log(1 - y')
+		-Step 4: Back propagation
+			-Find dE/dy', dy'/dz, dz/dw1, dz/dw2, dz/db
+			-Then 	Δw1 = dE/dw1 = dE/dy' * dy'/dz * dz/dw1
+					Δw2 = dE/dw2 = dE/dy' * dy'/dz * dz/dw2
+					Δb = dE/db = dE/dy' * dy'/dz * dz/db
+		-Step 5: Update bias and weights (Choose α, lets say 5)
+			-w1 = w1 - α * Δw1
+			 w2 = w2 - α * Δw2
+			 b = b - α * Δb
+		-Repeat from Step 2
+	
+	
+
+-Important concepts - Common interview questions
+
+-Some important concepts
+	-Why do we use activation functions?
+		-To put special boundary conditions on the output
+		-To introduce non-linearity and find complex patterns
+	-What are different types of activation functions?
+		-Step 
+			-Takes 0 or 1 value
+			-Upper boundary = 1
+			-Lower boundary = 0
+			-Class/Reg = Classification
+			-Layer = Mostly Output
+		-Sigmoid 
+			-σ(x)=1/(1+e^x) -> value varies from 0 to 1 -> 
+			-Upper boundary = 1
+			-Lower boundary = 0
+			-Class/Reg = Classification
+			-Layer = Hidden and Output
+		-tanh 
+			-tanh(x) -> have better convergent efficiency that sigmoid as center is around 0.
+			-Upper boundary = 1
+			-Lower boundary = -1
+			-Class/Reg = Classification
+			-Layer = Hidden and Output
+		-ReLU (Rectified Linear Unit) 
+			-max(0, x) -> f(x)=0 for x>0; f(x)=0 for x<=0 
+			-Upper boundary = Infinity
+			-Lower boundary = 0
+			-Class/Reg = Classification
+			-Layer = Hidden -> as it introduced non-linearity
+	-Can hidden and output layers have different activation functions?
+		-Yes
+	-What is multi-class classification? Is there specific activation function for this?
+		-2 classes like 'Yes' or 'No' -> Binary classification
+		-More than 2 classes like 'shirts', 'trousers', 'socks' -> multi-class classification
+		-For multi-class, we use softmax activation
+			-Softmax activation function works similar to Sigmoid function but has an additional step.
+			-In multi-class classification, for each class, we keep one output neuron with Sigmoid activation.
+			-All the outputs go into softmax layer where each output is divided by the total sum to bring the total probability to one.
+	-What is the difference betwen GD and Stochastic GD (SGD)?
+		-SGD -> Single training record, forward and backward propagation
+		-GD -> Full training set, forward and backward propagation
+		-Mini Batch GD -> Small batch of training set, forward and backward propagation
+		-SGD starts updating weights and biases rapidly but it finds difficulty in converging whereas GD is slow because in each pass it has to go through the entire training set. But the good thing about GD is it converges very well.
+	-What is epoch?
+		-Epoch is one cycle through the full training data
+		-It is different from iteration. Iterations are the number of times you execute any process within one full training set.
+		-Ex: Suppose we have 1000 training records, if we are doing SGD, i.e. one record is input at a time, then 1000 iterations within one epoch
+		-If we enter 1000 records 2 times -> Epoch is 2
+		-The idea of using epoch is to allow the network to recheck its performance on the same data.
+		
+		
+		
+		
+-Standard Model Parameters
+
+-Hyperparameters
+	-General Classification Hyperparameters
+		-Number of input neurons -> one per input feature
+		-Number of hidden layers -> Depend on the problem, but typically 1 to 5
+		-Hidden layer activation function -> ReLU
+	-Modelwise classification Hyperparameters
+		-Binary classification Hyperparameters
+			-Number of output neurons -> 1
+			-Output layer activation function -> Logistic (or sigmoid)
+			-Loss function -> Cross entropy
+		-Multilabel binary classification Hyperparameters
+			-Number of output neurons -> 1 per label
+			-Output layer activation function -> Logistic (or sigmoid)
+			-Loss function -> Cross entropy
+		-Multiclass classification Hyperparameters
+			-Number of output neurons -> 1 per class
+			-Output layer activation function -> Softmax
+			-Loss function -> Cross entropy
+	-General regression Hyperparameters
+		-Number of input neurons -> 1 per input feature
+		-Number of hidden layers -> Depend on the problem, but typically 1 to 5
+		-Neurons per hidden layer -> Depend on the problem, but typically 10 to 100
+		-Number of output neurons = 1 per prediction dimension
+		-Hidden layer activation function -> ReLU
+		-Output layer activation function -> None
+		-Loss function -> MSE
+
+
+
+-Tensorflow and Keras
+
+-Keras and Tensorflow
+	-Keras
+		-Keras is a deep learning framework that provides a convenient way to define and train almost any kind of deep learning model.
+		-Keras is a model-level library, providing high-level building blocks for developing deep-learning models.
+		-Keras works at the model level. It will help you define the model, that is, how many layers, how many hidden layers,what is the error function, what is the optimizer etc. 
+		-But Keras does not handle the lower level operations like differentiation, metrics manipulation etc. Instead such low level manipulation and differentiation of data is done by certain specialized and well optimized libraries such as Tensorflow (developed by Google), CNTK (by Microsoft), Theano (by Mila lab at university of Montreal)
+	-Tensorflow
+		-Use processing power of system, which is provided by CPU or GPU.
+			-By default CPU based installation of Keras and Tensorflow
+			-NVDA GPU + CUDA/cuDNN deep learning libraries
+-Installing Tensorflow and Keras
+	-conda install tensorflow
+	-conda install pip
+	-pip install --upgrade tensorflow==2.0.0-rc1       #<check version>
+	-import tensorflow as tf
+	 from tensorflow import keras
+	 keras.__version__
+	 tf.__version__
+	
+	
+	
+-Python - Dataset for classification problem
+
+-Dataset for classification
+	-Dataset: 28x28 gray image of cloths
+	
+	fashion_mnist = keras.datasets.fashion_mnist
+	(x_train_full, y_train_full), (x_test, y_test) = fashion_mnist.load_data()
+	x_train_full.shape, y_train_full.shape
+	x_test.shape, y_test.shape
+	
+	x_train_full[10]
+	plt.imshow(x_train_full[10])
+	
+	y_train_full[0]
+	class_names = ["T-shirt/top", "Trouser", "Pullover", "Dress", "Coat",
+              "Sandal", "Shirt", "Sneaker", "Bag", "Ankle boot"]
+	class_names[y_train_full[10]]
+-Normalization and Test-Train split
+	-Each pixel intensity varies from 0 to 255. So to normalize, divide each pixel by 255
+	
+	#Data normalization
+	x_train_n = x_train_full / 255.
+	x_test_n = x_test / 255.
+	
+	#Split the training data into training and validation
+	x_valid, x_train = x_train_n[:5000], x_train_n[5000:]
+	y_valid, y_train = y_train_full[:5000], y_train_full[5000:]
+	x_test = x_test_n
+	
+
+
+-Python - Building and training the model
+
+-Different ways to create ANN using Keras
+	-There are 2 APIs for defining a model in Keras
+		-Sequential model API
+			-sequential API is useful to create layer by layer models, where all the outputs of previous layer are connected as inputs of the next layer and so on.
+			-For the simple neural networks sequential API is recommended.
+		-Functional API
+			-Used for some advanced complex structure.
+			-Example: 
+				-A hidden layer receiving input from other hidden layer and also from input layer
+				-One hidden layer receiving part of the input and other hidden layer receiving other part of the input
+-Building NN with using Keras
+	#There are multiple occasions where a NN generates random number such as assigning the initial weights. Using random seed will help you to reproduce the same result using the same initial weights every time.
+	
+	np.random.seed(42)   
+	tf.random.set_seed(42)
+	
+	#Create model
+	model = keras.models.Sequential()
+	model.add(keras.layers.Flatten(input_shape=[28,28]))
+	model.add(keras.layers.Dense(300, activation="relu"))
+	model.add(keras.layers.Dense(100, activation="relu"))
+	model.add(keras.layers.Dense(10, activation="softmax"))
+	#Check model summary
+	model.summary()
+	#See/Check NN
+	import pydot       #conda/pip install pydot
+	keras.utils.plot_model(model)
+	#Weights and biases are assigned randomly for initialization. Check those values
+	weights, biases = model.layers[1].get_weights()      #check for 2, 3 layer
+	weights.shape
+	biases.shape
+-Compiling and Training the NN model
+	-Set the learning process for model using model.compile() method
+	-https://keras.io/api/models/sequential/
+	-class_weights -> If you have some uneven distribution of your classes in your y-variable, then we have to use class_weights to give larger weight under-represented classes and to give lower weights to over-represented classes.
+	
+	#Compile and train the model
+	model.compile(loss="sparse_categorical_crossentropy", optimizer="sgd", metrics=["accuracy"])
+	model_history = model.fit(x_train, y_train, epochs=30, validation_data=(x_valid, y_valid))
+	#Check model parameters
+	model_history.params
+	model_history.history
+	#Plot the model history
+	pd.DataFrame(model_history.history).plot(figsize=(8, 5))
+	plt.grid(True)
+	plt.gca().set_ylim(0, 1)
+	plt.show()
+-Evaluating performance and predicting using Keras
+	#Test the model
+	model.evaluate(x_test, y_test)
+	#Predict the model -> we don't have new data, so lets do prediction for some sample from test data
+	#Predict probability of each class
+	y_proba = model.predict(x_new)
+	y_proba.round(2)
+	#Predict classes
+	y_pred=np.argmax(y_proba,axis=1)
+	y_pred
+	np.array(class_names)[y_pred]
+	plt.imshow(x_new[0])
+
+
+
+
+-Python - Solving a Regression problem using ANN
+
+-Building Neural Network for Regression problem
+	-Dataset: California housing
+		-https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html
+		
+	import numpy as np
+	import pandas as pd
+	%matplotlib inline
+	import matplotlib as mpl
+	import matplotlib.pyplot as plt
+	
+	import tensorflow as tf
+	from tensorflow import keras
+	
+	#Download/Load dataset
+	from sklearn.datasets import fetch_california_housing
+	housing = fetch_california_housing()
+	
+	print(housing.feature_names)
+	
+	#Split dataset into training/validation/test
+	from sklearn.model_selection import train_test_split
+	x_train_full, x_test, y_train_full, y_test = train_test_split(housing.data, housing.target, random_state=42)
+	x_train, x_valid, y_train, y_valid = train_test_split(x_train_full, y_train_full, random_state=42)
+	x_train.shape, y_train.shape, x_valid.shape, y_valid.shape, x_test.shape, y_test.shape
+	
+	#Preprocess data - Standardize the datasets
+	from sklearn.preprocessing import StandardScaler
+	scaler = StandardScaler()
+	x_train = scaler.fit_transform(x_train) #We are fitting "scaler" object on training data
+	x_valid = scaler.transform(x_valid) #Using same "scaler" object to transform validation and test data 
+	x_test = scaler.transform(x_test)
+	
+	#Set random seed to generate same result everytime we run this model
+	np.random.seed(42)
+	tf.random.set_seed(42)
+	
+	#Create structure for NN
+	model = keras.models.Sequential([
+		keras.layers.Dense(30, activation="relu", input_shape=x_train.shape[1:]),
+		keras.layers.Dense(30, activation="relu"),
+		keras.layers.Dense(1)
+	])
+	model.summary()
+	#Compile the model
+	model.compile(loss="mean_squared_error",
+             optimizer=keras.optimizers.SGD(learning_rate=1e-3),
+             metrics=['mae'])
+	
+	#Train the model using train data
+	model_history = model.fit(x_train, y_train, epochs=20, validation_data=(x_valid, y_valid))
+	#Check model training parameters (loss, mae, val_loss, val_mae)
+	model_history.history
+	
+	#Evaluate performance of trained model on test data
+	mae_test = model.evaluate(x_test, y_test)
+	
+	#Plot the model_hostory parameters
+	pd.DataFrame(model_history.history).plot(figsize=(8, 5))
+	plt.grid(True)
+	plt.gca().set_ylim(0, 1)
+	plt.show()
+	
+	#Predict values on new dataset. As we don't have unknown data, pick unknown data from test data only
+	x_new = x_test[:3]
+	y_pred = model.predict(x_new)
+	print(y_pred)
+	
+	#Delete model
+	del model
+	#Clear resources
+	keras.backend.clear_session()
+	
+	
+		
+-Complex ANN Architectures using Functional API
+
+-Using Functional API for complex architecture
+	-With sequential API, you can only create neural network with simply sequential architecture. You cannot create complex typologies where you have multiple inputs or multiple outputs, for that you have to use functional API.
+	-In functional API, we create each of these layers in the form of functions or you can say a building block of your neural network and you can use this functions to create a complex structure by joining them according to your structure need.
+	-Wide and Deep neural network
+		-Deep because our input is going through 2 layers of dense hidden layer and wide because our input is directly going for output as well.
+		-Along with the output of this hidden layers it also connect all parts of our input directly to the output layer. This linkage is not possible when we are using sequential API
+		-The advantage of this architecture is that it makes possible for a neural network to learn both the deep patterns by this deep linkage and the simple rules by this wide linkage.
+		-In our regular MLP model, all the data flows through this full stacks of dense layers and thus some simple patterns in the data may end up being distorted by the sequence of this transformation.
+	
+	import numpy as np
+	import pandas as pd
+	%matplotlib inline
+	import matplotlib as mpl
+	import matplotlib.pyplot as plt
+	
+	import tensorflow as tf
+	from tensorflow import keras
+	
+	#Download/Load dataset
+	from sklearn.datasets import fetch_california_housing
+	housing = fetch_california_housing()
+	
+	print(housing.feature_names)
+	
+	#Split dataset into training/validation/test
+	from sklearn.model_selection import train_test_split
+	x_train_full, x_test, y_train_full, y_test = train_test_split(housing.data, housing.target, random_state=42)
+	x_train, x_valid, y_train, y_valid = train_test_split(x_train_full, y_train_full, random_state=42)
+	x_train.shape, y_train.shape, x_valid.shape, y_valid.shape, x_test.shape, y_test.shape
+	
+	#Preprocess data - Standardize the datasets
+	from sklearn.preprocessing import StandardScaler
+	scaler = StandardScaler()
+	x_train = scaler.fit_transform(x_train) #We are fitting "scaler" object on training data
+	x_valid = scaler.transform(x_valid) #Using same "scaler" object to transform validation and test data 
+	x_test = scaler.transform(x_test)
+	
+	#Set random seed to generate same result everytime we run this model
+	np.random.seed(42)
+	tf.random.set_seed(42)
+	
+	#Create structure for NN
+	input_ = keras.layers.Input(shape=x_train.shape[1:])
+	hidden1 = keras.layers.Dense(30, activation="relu")(input_)
+	hidden2 = keras.layers.Dense(30, activation="relu")(hidden1)
+	concat = keras.layers.concatenate([input_, hidden2])
+	output = keras.layers.Dense(1)(concat)
+	model = keras.models.Model(inputs=[input_], outputs=[output])
+	#Summarise model
+	model.summary()
+	
+	#Compile the model
+	model.compile(loss="mean_squared_error",
+             optimizer=keras.optimizers.SGD(learning_rate=1e-3),
+             metrics=['mae'])
+			 
+	#Train the model using train data
+	model_history = model.fit(x_train, y_train, epochs=40, validation_data=(x_valid, y_valid))
+	#Check model training parameters (loss, mae, val_loss, val_mae)
+	model_history.history
+	
+	#Evaluate performance of trained model on test data
+	mae_test = model.evaluate(x_test, y_test)
+	
+	#Plot the model_hostory parameters
+	pd.DataFrame(model_history.history).plot(figsize=(8, 5))
+	plt.grid(True)
+	plt.gca().set_ylim(0, 1)
+	plt.show()
+	
+	
+
+	
+-Saving and restoring models
+
+-Saving - Restoring models and using callbacks
+	-You can save the model only after the completion of its training. But usually we have a very large dataset which can take up to 8 to 10 hours just to train the model. For that scenario, we can use callbacks.
+	-You can think of callbacks as check points which will allow you to save your model after each epoch. So you don't have to wait for the complete training, you can save your model after each epoch as well.
+
+	-Save and load the model
+		#Save the model
+		model.save("my_functional_api_model.h5")
+		%pwd
+		
+		#Change directory
+		%cd <new directory>
+		
+		#Delete model
+		del model
+		
+		#Clear resources/session
+		keras.backend.clear_session()
+		
+		#Load existing model
+		model = keras.models.load_model("my_functional_api_model.h5")
+		model.summary()
+		
+		#Predict values on new dataset. As we don't have unknown data, pick unknown data from test data only
+		x_new = x_test[:3]
+		y_pred = model.predict(x_new)
+		print(y_pred)
+	
+	-Using callbacks during training
+		#Create structure for NN
+		model = keras.models.Sequential([
+			keras.layers.Dense(30, activation="relu", input_shape=x_train.shape[1:]),
+			keras.layers.Dense(30, activation="relu"),
+			keras.layers.Dense(1)
+		])
+		
+		#Compile the model
+		model.compile(loss="mean_squared_error",
+				 optimizer=keras.optimizers.SGD(learning_rate=1e-3),
+				 metrics=['mae'])
+		
+		#Create callback checkpoint
+		checkpoint_cb = keras.callbacks.ModelCheckpoint("Model{epoch:02d}.h5")
+		
+		#Train the model using train data
+		model_history = model.fit(x_train, y_train, epochs=10, validation_data=(x_valid, y_valid), callbacks=[checkpoint_cb])
+		
+		#Clear model and session
+		del model
+		keras.backend.clear_session()
+		
+		#Load model file corresponds to specific checkpoint
+		model = keras.models.load_model("Model05.h5")
+		model.summary()
+		
+		#Evaluate performance of trained model on test data
+		mae_test = model.evaluate(x_test, y_test)
+		
+	-Save best model only
+		#Create structure for NN
+		model = keras.models.Sequential([
+			keras.layers.Dense(30, activation="relu", input_shape=x_train.shape[1:]),
+			keras.layers.Dense(30, activation="relu"),
+			keras.layers.Dense(1)
+		])
+		
+		#Compile the model
+		model.compile(loss="mean_squared_error",
+				 optimizer=keras.optimizers.SGD(learning_rate=1e-3),
+				 metrics=['mae'])
+		
+		#Create callback checkpoint
+		checkpoint_cb = keras.callbacks.ModelCheckpoint("Best_Model.h5", save_best_only=True)
+		
+		#Train the model using train data
+		model_history = model.fit(x_train, y_train, epochs=10, validation_data=(x_valid, y_valid), callbacks=[checkpoint_cb])
+		
+		#Load best model
+		model = keras.models.load_model("Best_Model.h5")
+		model.summary()
+		
+		#Evaluate performance of trained model on test data
+		mae_test = model.evaluate(x_test, y_test)
+	
+	-One of the best method to train your model is "early stopping". Early stopping means you run your model for a very large number of epoch values.
+		-Suppose we are using 200 epochs and then we will keep an eye on my validation set score. So suppose if after 60 epochs our validation set accuracy is not improving then I will stop the training at that point and I will be using the model with the best validation score so far.
+		-We don't have to worry about how epochs we want to run. We just set a very high value of epoch. We monitor the validation set score and then select the best model that we have got so far.
+	
+		model = keras.models.Sequential([
+			keras.layers.Dense(30, activation="relu", input_shape=x_train.shape[1:]),
+			keras.layers.Dense(30, activation="relu"),
+			keras.layers.Dense(1)
+		])
+		
+		#Compile the model
+		model.compile(loss="mean_squared_error",
+				 optimizer=keras.optimizers.SGD(learning_rate=1e-3),
+				 metrics=['mae'])
+		
+		#Create callback checkpoint
+		checkpoint_cb = keras.callbacks.ModelCheckpoint("early_stop_model.h5", save_best_only=True)
+		
+		#Early stopping checkpoint
+		#patience=Number of epochs with no improvement after which training will be stopped
+		early_stopping_cb = keras.callbacks.EarlyStopping(patience=10, restore_best_weights=True)
+	
+		#Train the model using train data
+		model_history = model.fit(x_train, y_train, epochs=200, validation_data=(x_valid, y_valid), callbacks=[checkpoint_cb, early_stopping_cb])
+	
+		#Load early stopping best model
+		model = keras.models.load_model("early_stop_model.h5")
+		model.summary()
+		
+		#Evaluate performance of trained model on test data
+		mae_test = model.evaluate(x_test, y_test)
+	
+
+
+
+-Hyperparameters tunning
+	-Hyperparameters
+		-Number of hidden layers
+		-Number of neurons per hidden layer
+		-Type of activation function
+		-Learning rate
+		-Weight initialization logic
+		-and many more
+	-Number of hidden layers
+		-For most problem single layer is sufficient
+		-But going deeper increases parameter efficiency
+			-Deep networks have a much higher parameter efficiency than shallow (less deep) ones. They can model complex functions using exponentially fewer neurons than shallow ones allowing them to reach much better performance with the same amount of trading data.
+			-Lower hidden layers model lower level structures, intermediate hidden layers combine these lower level structures to model intermediate level structures and highest layers and the output layer combine these intermediate structures to model high level structures. Not only does this hierarchical structure help deep neural networks converge faster it also improves the ability to generalize to new data.
+		-Transfer learning
+			-Use weights and bias of one model for other/second model so that second model do not need to start training from the scratch.
+			-For example, you can use weights and biases of first few layers of face recognition model for the hair stype recognition model.
+	-Number of neurons per hidden layer
+		-Number of neurons in input and output hidden layers are according to your data and problem
+		-Earlier pyramid structures were preferred (large number of neurons in first layer and then gradually decrease to output layer)
+		-Now same number of neurons in all hidden layers are preferred
+	-In general, increasing the depth of the network has better results on the accuracy than increasing the number of neurons per layer.
+	-Another approach could be to pick a model with large number of hidden layers and large number of neurons per hidden layer and then use early stopping method to prevent that model from over fitting.
+	-Learning rate
+		-In general, the optimal learning rate is about half of the maximum learning rate, that is, the learning rate above which the training algorithm diverges.
+		-So to tune learning rate, start with a large value, that makes algorithm diverge, then divide this value by 3 and try again and repeat this until the training algorithm stops diverging, at that point you generally won't be too far from the optimal learning rate.
+	-Batch size
+		-Should be < 32 (20-32) and don't make it too small
+	-Epochs
+		-Use early stopping
+	
+	
+	
+	
+-Add-on 1: Data Preprocessing
+
+-Gathering business knowledge
+	-Understand business context
+		-Quality of inputs decide the quality of model output.
+	-Types of research
+		-Primary research
+			-Discussions
+			-Dry Run
+		-Secondary research
+			-Reports and studies
+			-Previous works
+-Data Exporation
+	-Steps to collect relevant data
+		-Identify data need 
+		-Plan data request - requesting data from relevant people within and outside the organization
+		-Quality check - quality check on received data
+	-Data types
+		-Internal data
+			-Data collected by your organization. Ex: usage data, sales data, promotion data
+		-External data
+			-Data acquired from external data sources. Ex: Censes Data, External vendor data, Scrape data
+-The Dataset and The Data Dictionary
+	-The problem statement here is that you are a manager in a real estate company and you want to find out the true value of a property. That is, on the basis of past property transactions, you want to get the price of the property you want to sell.
+	-So price of all property will be the dependent variable in our analysis and other factors which impact the price, which we identified based on primary and secondary research are the independent variables.
+	-A comprehensive data dictionary should include
+		-Definition of predictors
+		-Unique identifier of each table (or primary keys)
+		-Foreign keys or matching keys between tables
+		-Explanation of values in case of Categorical variables
+
+#Import relevant libraries
+import numpy as np
+import pandas as pd
+import seaborn as sns
+#Load csv file
+df = pd.read_csv('C:/Users/pakale/Desktop/Data Science/Neural_Network_In_Python/Data Files/House_Price.csv', header=0)
+df.head()
+df.shape
+
+#Univariate analysis: Describe each and every single variable and not relationships between two or more variables. One variable analysis.
+#Ways to describe patterns found in univariate data
+	#Central tendency: Mean, Mode, Median
+	#Dispersion: Range, Variance, Maximum, Minimum, Quartiles, Standard deviation
+	#Count/Null count
+#EDD: Extended Data Dictionary - Contains univariate analysis information about all the variables of the dataset
+
+#Do univariate analysis for numerical variable 
+df.describe()
+#Plot scatter plot/histogram for variables for which outliers/skewness observed
+sns.jointplot(x='crime_rate', y='price', data=df)
+sns.jointplot(x='n_hot_rooms', y='price', data=df)
+sns.jointplot(x='rainfall', y='price', data=df)
+
+#Plot bar plot/count plot for categorical variable
+sns.countplot(x='airport', data=df)
+sns.countplot(x='waterbody', data=df)
+sns.countplot(x='bus_ter', data=df)
+
+#Outlier treatment
+	#Reasons: Data entry errors, Measurement error, Sampling error
+	#Impact: It increases the error variance and reduces the power of statistical tests
+	#Solution: Detect outliers using EDD and visualization methods such as scatter plot, histogram or box plots. Impute outliers.
+		#Capping and Flooring: We find the upper limit and lower limit beyond which we will change the values (we will assign them some particular value).
+		#Exponential smoothing: Extrapolate curve between P95 to P99
+		#Sigma approach: Used in manifactoring industry
+	#When the data has outliers there is a larger difference between mean and median, also the standard deviation is higher.
+
+#Get count/null values/data type of data
+df.info()
+
+#Get 99 percentile of variable
+uv = np.percentile(df.n_hot_rooms, [99])[0]
+#Get rows where uv value greater than "uv"
+df[(df.n_hot_rooms>uv)]
+#Set new value to outliers (3 times 99 percentile value)
+df.n_hot_rooms[(df.n_hot_rooms>3*uv)] = 3*uv
+
+#Get 1st percentile of variable
+lv = np.percentile(df.rainfall, [1])[0]
+#Get rows where lv value greater than "lv"
+df[(df.rainfall<lv)]
+#Set new value to outliers (0.3 times 1st percentile value)
+df.rainfall[(df.rainfall<0.3*lv)] = 0.3*lv
+
+#There are ways to remove outliers without actually removing it just by transforming the function or taking log or taking arithmetic, taking exponential or taking square root of those values. We will do that latter
+sns.jointplot(x='crime_rate', y='price', data=df)
+#Generate and check the descriptive statistics after outlier treatment
+df.describe()
+
+#Missing value imputation
+	#Impact: Many ML does not support data with missing values
+	#Solution: Remove rows with missing values from dataset or Impute missing values with mean/median values in dataset
+		#Missing value imputation ways
+			#Impute with Zero
+			#Impute with Mean/Median/Mode
+			#Segment based imputation: Identify relevant segment, compute mean for segment, impute missing value according to segment
+	#Note: Advisable to impute values instead of removing rows in case of small sample size or large proportion of observations with missing values
+
+#Indentify missing values
+df.info()
+#Fill missing values with mean value
+df.n_hos_beds = df.n_hos_beds.fillna(df.n_hos_beds.mean())
+df.info()
+
+#You can fill missing value for all columns using single command, but for different column different approach can be taken to fill values
+#df = df.fillna(df.mean())
+
+#Seasonality in Data
+	#Reasons: Weather, Vacation, Holidays
+	#Solution: Calculate multiplication factor for each month as, [m(Month) = μ(Year) / μ(Month)]. Multiply each observation with its multiplication factor.
+#Bi-variate analysis and variable transformation
+	#Bivariate analysis is the simultaneous analysis of 2 variables. It explores the concept of relationship between 2 variable, whether there exists an association and the strenght of the association, or whether there are differences between 2 variables and the significance of those differences.
+	#There are 2 ways to look at 2-variable relationships
+		#Scatter plot
+			#We should plot scatter plot of each independent variable against the dependent variables and then we should ask is there a visible relationship between these variables. If there is none we should go back and check business knowledge.
+			#If there is a visible relationship then we should see if it is a linear relationship or not. If it is a linear relationship, we will straightaway use that variable for linear regression analysis. If it is some other sort of relationship, we will transform the variables so that the transformed variable is now linearly related.
+			#So on the basis of scatter plot, we will decide whether to keep discard or transform our variable.
+		#Correlation matrix
+			#Correlation matrix gives the linear correlation coefficient between all pairs of variables of dataset. 
+			#If X2 increases when X1 increases and X2 decreases when X1 decreases the variables tend to be highly positively correlated. Similarly if X2 degree increases when X1 decreases the correlation is said to be negative. And if the change is random, that is, x2 increases sometimes and decreases sometimes with increase in X1 then the coefficient of correlation will be near zero.
+			#If the value is low, that is, near zero between the dependent and the independent variables. This will basically represent that probably there is no direct correlation between the dependent and the independent variable and we can consider discarding that independent variable.
+			#If there is very high correlation amongst the independent variables, it may suggest that the independent variables that we have selected may not be truly independent and we may have to let go of one of them because having both in the analysis leads to a type of error called multi-collinearity.
+#Variable transformation
+	#We use variable transformation, if the dependent and independent variables are not related linearly but in some other functional form we can modify the independent variable so that the modified version has a more linear relationship with the dependent variable.
+	#Identify: Using your business knowledge and bivariate analysis to modify variables
+	#Methods
+		#Use mean/median of variables conveying similar type of information
+		#Create ratio variable which are more relevant to business
+		#Transform variable by taking log, exponential, roots etc
+
+#Transform crime_rate varible
+sns.jointplot(x='crime_rate', y='price', data=df)
+df.crime_rate = np.log(1+df.crime_rate)
+sns.jointplot(x='crime_rate', y='price', data=df)
+
+#Transform dist1, dist2, dist3, dist4 varible
+sns.jointplot(x='dist1', y='price', data=df)   #dist2, dist3, dist4
+df['avg_dist'] = (df.dist1+df.dist2+df.dist3+df.dist4)/4
+df.describe()
+df = df.drop(['dist1','dist2', 'dist3', 'dist4'], axis=1)    # del df['dist1']
+
+#Delete 'bus_ter' variable as it takes only single value
+del df['bus_ter']
+
+#Non-usable variables
+	#Identify the non usable variables to reduce the dimension of your dataset
+		#Variables with single unique value
+		#Variables with low fill rate (columns having extra large number of missing values can be dropped)
+		#Variables with regulatory issue (sensitive information like gender, religion etc)
+		#Variables with no business sense (check bivariate analysis)
+
+#Dummy variable creation: Handling qualitative data
+	#A dummy variable or indicator variable is an artificial variable created to represent an attribute with 2 or more distinct categories/levels
+	#Why?
+		#Regression analysis treats all independent varibles in the analysis as numerical
+		#Dummy coding is a way of incorporating nominal variables into regression analysis
+	#How?
+		#Can we make a separate column, or variable, for each category
+		#This new variable can take 0 or 1 depending on the value of the categorical variable
+	#Things to remember
+		#The number of dummy variable necessary to represent a single attribute varible is equal to the number of levels (categories) in that variable minus one.
+		#We can not assign variable values as 1, 2, 3 etc because there is no order in categorical variable or one is not in double/triple of other.
+		
+#Dummary variable treatment
+df = pd.get_dummies(df)
+df.head()
+del df['airport_NO']
+del df['waterbody_None']
+df.head()
+
+#Correlation analysis
+	#Correlation is a statistical measure that indicates the extent to which two or more variables fluctuate together. A positive correlation indicates the extent to which those variables increase or decrease in parallel;  a negative correlation indicates the extent to which one variable increases as the other decreases.
+	#Correlation coefficient
+		#It is a way to put a value to the relationship. It have value between -1 and 1. "0" means no relationship between the variables at all, while -1 or 1 means that there is a perfect -ve or +ve correlation.
+	#Correlation vs Causation
+		#Causation: The relation between something that happens and the things that causes it. The first thing that happens is the cause and the second thing is the effect.
+		#Correlation is just representing whether the values in two variables for our sample dataset are moving together or not. But it does not tell us anything about cause effect relationship between the two. We cannot say that because correlation coefficient is as high that increase in one variable will lead to increase or decrease in the other variable.
+	#Correlation Matrix
+		#It is a table showing correlation coefficients between variables. Each cell in the table shows the correlation between two variables.
+		#It is used as a way to summarize data, as an input into a more advanced analysis, and as a dignostic for advanced analysis.
+		#Applications:
+			#To summarize a large amount of data where the goal is to see patterns
+			#To identify collinearity in the data
+		#It is important that we identify highly correlated independent variables and remove one of the two so that multi-collinearity can be avoided. But which one of the two would you remove and which one you would keep. First try to keep the one which makes more business sense. If both make business sense, then look at the correlation coefficient of both with the dependent variable, whichever is higher, you may want to keep that one and remove the other one. If both of them are having the same correlation coefficient then you may go and pick the variable for which the data is easier to get.
+		
+#Get correlation matrix
+df.corr()
+#air_qual and parks have 0.9 (> 0.8) value of correlation coefficient, that is they are highly correlated, so need to drop one to avoid multi-collinearity.
+#Check correlation of air_qual and parks with dependent variable price and take variable with higher value and drop other.
+del df['parks']
+	
+
+
+
+-Add-on 1: Classic ML models - Linear Regression
+
+-Basic equations and OLS method
+	-Simple Linear Regression
+		-Simple Linear Regression is an approach for predicting a qualitative response, Y on the basis of a single predictor variable, X.
+		-Y ~ β0 + β1 * X
+		-Our goal is to obtain coefficients β0 and β1 such that the linear model fits the available data well.
+		-Residual, e(i) = y(i) - y_cap(i); where y(i)=actual value, y_cap(i) = predicted value
+		-Residual sum of squares (RSS) = e(1)^2 + e(2)^2 + ... + e(n)^2
+		-The least square approach chooses β_cap(0) and β_cap(1) to minimize the RSS.
+		-β_cap(1) = Summation(i=1->n) [(x(i) - x_mean) * (y(i) - y_mean)] / Summation(i=1->n) (x(i) - x_mean)^2
+		-β_cap(0) = y_cap - β_cap(1) * x_mean
+		-Assessing accuracy of predicted coefficients
+			-There are millions of house transactions happening, we picked a small set of 506 such observations and decided to identify the relationship between house price and number of rooms. If we take all the million observations of the world and then get a line called the "population regression line". This line may or may not be same as "Sample regression line".
+			-We want to use the coefficient of sample regression line as an estimate for population regression line. How far off will the sample estimate, that is, β_cap(0) and β_cap(1) will be from the population coefficient which are β(0) and β(1), for this we will use a quantity called standard error ofβ(0) and β(1). 
+			-SE(β_cap(0))^2 = σ^2 * [ (1/n) + (x_cap_mean^2 / (Summation(i=1->n) (x(i)-x_mean)^2 ) ) ]
+			-SE(β_cap(1))^2 = σ^2 / (Summation(i=1->n) (x(i)-x_mean)^2 )
+			-σ^2 is not known, but can be estimated from the data. This estimate is known as RSE.
+			-Residual standard error, RSE = SQRT(RSS/(n-2))
+			-There is approximately a 95% chance that the interval [β_cap(1)-2*SE(β_cap(1)), β_cap(1)+2*SE(β_cap(1))] will contain  the tue value of β(1).
+			-Hypothesis tests
+				-RSE is used to identify whether there is any relationship between 	X and Y or not (Y = β0 + β1 * X)
+				-If β1 is zero, it means there is no relationship
+					-H0: There is no relationship between X and Y (H: β1 = 0)
+					-Ha: There is some relationship between X and Y (Ha: β1 != 0) Ha -> Alternate Hyothesis
+				-To disapprove Ho, we calculate t-statistics, t = (β_cap(1)-0)/SE(β_cap(1))
+				-We also compute the probability of observing any value equal to |t| or larger, we call this probability as p-value.
+				-A small p-value means there is an association between the predictor and the response (typically less than 5% or 1%)
+		-Assessing model accuracy: RSE and R-squared
+			-The quality of a linear regression fit is typically assessed using two related quantities: RSE and R^2 statistics
+			-Residual standard error (RSE)
+				-RSE = SQRT(RSS/(n-2)) = SQRT(( Summation(i=1->n) (y(i)-y_cap(i))^2 )/(n-2))
+				-RSE is the average amount that the response will deviate from the true regression line.
+				-RSE is also considered as a measure (absolute) of lack of fit of the model to the data
+			-R^2
+				-R^2 is proportion of total variance explained by our model
+				-R^2 always takes value between 0 and 1
+				-R^2 is independent of scale of Y
+				-R^2 = (TSS - RSS)/TSS
+					-TSS = Total Sum of Squares, RSS = Residual Sum of Squares
+					-TSS is measuring the amount of variability inherent in the response. The price of each house itself is varying around the mean house price so if you find the difference of actual house price from the mean of the house price, square these values and add them up, you get total sum of squares.
+					-RSS is measuring the amount of variability that is not explained by our model after regression.
+					-(TSS-RSS) is giving us the variability of Y which is explained by our model. Therefore, R^2 measures the proportion of explained variance from the total variance.
+				-R^2 close to 1 indicate that a large proportion of the variability in the response variable has been explained by the regression model, if it is close to 0, it indicates that regression did not explain much of the variability. This can occur either because our linear model is wrong or because linear was not the right choice for this relationship between X and Y or both of these reasons.
+				-Adjusted-R^2 also takes into account the total number of variables which are actually impacting the model. The reason behind doing this is, if you keep on adding variables to your model R^2 value simply keeps on increasing. Even if the variable is not significantly related with the response variable, still the R^2 value will increase by a small amount. So the adjusted R^2is a modified version of R^2 that has been adjusted for the number of predictors in the model.
+				-The adjusted R^2 increases only the new term improves the model more than would be expected by chance, it decreases when we predictor improves the model by less than expected by chance.
+				-Adjusted R^2 is more preferred term over R^2.
+				-If the data is coming from a science experiment and the relationship is supposed to be actually linear in such a case R^2 should be very close to 1. But if it is a marketing data and we are missing a lot of unmeasured factors and a linear assumption is also a rough approximation of the relationship, the residual errors are going to be large in such a case even smaller (>0.5) R^2 value are acceptable.
+		
+	
+#Simple linear model - method 1
+import statsmodels.api as sn
+X = sn.add_constant(df['room_num'])
+lm = sn.OLS(df['price'], X).fit()
+lm.summary()
+
+#Simple linear model - method 2
+from sklearn.linear_model import LinearRegression
+y = df['price']
+X = df[['room_num']]
+lm2 = LinearRegression()
+lm2.fit(X, y)
+print(lm2.intercept_, lm2.coef_)
+
+lm2.predict(X)	#Predict values
+sns.jointplot(x=df['room_num'], y=df['price'], data=df, kind='reg') # Plot regression line
+
+
+
+-Multiple Linear Regression
+	-In multiple linear regression more than one predictor variables are used to predict the response variable.
+	-Y = β0 + β1 * X1 + β2 * X2 + ... + βp * Xp + ε
+	-F-statistic
+		-F-statistic adjust itself for number of predictors
+		-F = [(TSS-RSS)/p] / [RSS/(n-p-1)]
+		-The idea is instead of looking at individual variables and saying that the model predictors are significantly impacting the response variable, we will look at a different statistic which takes into account the number of variables that we have. This ensures that we do not make the mistake of saying that the models have a significant relationship with predictor, if we got that one or two predictor variables were significantly impacting the response by chance. So to avoid that chance, We are using F-statistic. We look at its value and we look at the corresponding p-value, if this p-value is lower than the threshold value, we say that the model predictors are significantly impacting the response. After that we will look at the individual predictors and there estimates and p-values.
+		-You have to check whether your p-value of F-statistic is lower than the threshold of 5 percent or not. This will ensure that the model predictors that you used are having some significant impact on the response variable.
+	-Interpreting results of categorical variables
+		-We first transform categorical variables into dummy variables of (n-1) categories then we run the regression then looking at the betas and the p values we interpret the result.
+		
+		
+#Multiple Linear Regression - model
+
+#Model using statsmodels
+X_multi = df.drop("price", axis=1)
+Y_multi = df['price']
+X_multi_cons = sn.add_constant(X_multi) # add constant
+lm_multi = sn.OLS(Y_multi, X_multi_cons).fit()
+lm_multi.summary()
+#Lower the p-value (less than 0.05) for variable, more significant the variable in determining the output variable, Y.
+
+#Model using sklearn
+lm3 = LinearRegression()
+lm3.fit(X_multi, Y_multi)
+print(lm3.intercept_, lm3.coef_)
+
+
+
+-Test-train split
+	-MSE = (1/n) * Summation(i=1->n) (y(i)-f_cap(x(i)))^2
+	-Training error: Performance of model on previously seen data
+	-Test error: Performance of model on the unseen data
+	-Test-train split techniques
+		-Validation set approach
+			-Random division of data into 2 parts (80:20 -> Training:Test)
+			-When to use - In case of large number of observations
+		-Leave one out cross validation
+			-Leaving one observation every time from training set
+		-K-Fold validation
+			-Divide the dataset into k set. We will keep one testing and k-1 for testing.
+-Bias Variance trade-off
+	-Our agenda is to find the model that lowest test error.
+	-Expected test error = E(Bias) + E(Variance) + E(ε)
+		E(ε): Variance of error, irreducible
+		E(Variance): Amount by which predicted function will change if we change training dataset
+		E(Bias): Error due to approximation of complex relationship as a simpler model such as linear model
+	-E(Variance) refers to the amount by which the predicted function would change if we change our training dataset.
+	-As we increase flexibility, error due to variance increases and error due to bias decreases. Although we want to decrease both but when we try to decrease one the other one starts to increase. So the challenge is to find that point wherr their sum is minimum.
+
+
+#Test-train split
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X_multi, Y_multi, test_size = 0.2, random_state = 25)
+lm_a = LinearRegression()
+lm_a.fit(X_train, y_train)
+y_test_a = lm_a.predict(X_test)
+y_train_a = lm_a.predict(X_train)
+from sklearn.metrics import r2_score
+r2_score(y_test, y_test_a)
+r2_score(y_train, y_train_a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
